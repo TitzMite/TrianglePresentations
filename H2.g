@@ -108,29 +108,3 @@ Read("H2_reps.g");
 LatticesH2C7 := List(H2_reps, tp->TypeRotatingLattice(tp));
 
 RewritingSystemsH2C7 := List(LatticesH2C7, pi -> RewritingSystemTypeRotatingLattice(pi));
-
-Read("H2_balls.g");
-
-ComputeRepresentativeSystem2Balls := function()
-    local reps_indices, b, i, j, new;
-    reps_indices := [];
-    for i in [1..Length(BallsH2C7)] do
-        b := BallsH2C7[i];
-        new := true;
-        for j in reps_indices do
-            Print("time: ", CurrentDateTimeString(),"\n");
-            Print("now checking ", j, " and ", i, "\n");
-            if GraphIsomorphism(b, BallsH2C7[j]) <> fail then
-                Print("isomorphic.\n\n");
-                new := false;
-                break;
-            else
-                Print("not isomorphic.\n\n");
-            fi;
-        od;
-        if new then
-            Add(reps_indices, i);
-        fi;
-    od;
-    return reps_indices;
-end;
